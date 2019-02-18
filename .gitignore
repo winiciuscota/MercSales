@@ -1,0 +1,19 @@
+# Pycache
+*.pyc
+__pycache__
+
+# Env vars
+local.env
+
+# Virtual env
+env
+
+# Database
+db.*
+
+# Static and media files
+.static/
+.media/
+
+# Tests
+.pytest_cache/
