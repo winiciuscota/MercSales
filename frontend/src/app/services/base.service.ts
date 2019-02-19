@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
-import "rxjs/add/operator/map";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { environment } from "../environments/environment";
+import { environment } from "../../environments/environment";
 import urljoin from "url-join";
 
 @Injectable()
