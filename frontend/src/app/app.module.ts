@@ -13,7 +13,6 @@ import { SalesListComponent } from './components/sales/list/sales.list.component
 import { SalesFormComponent } from './components/sales/form/sales.form.component';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,

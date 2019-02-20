@@ -1,0 +1,79 @@
+<div class="row">
+    <div class="x_panel col-sm-12">
+        <div class="form-horizontal">
+            <form #f="ngForm" (ngSubmit)="submit()" novalidate>
+                <div class="row">
+
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="form-group col-sm-2">
+                                <label for="" class="control-label">Cliente</label>
+                                <select name="client-id" id="client-id" class="form-control"
+                                    [(ngModel)]="item.clientId">
+                                    <option value="undefined">Selecione um cliente</option>
+                                    <option value="{{client.id}}" *ngFor="let client of clients">{{client.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                <label for="" class="control-label">Produto</label>
+                                <select name="product-id" id="product-id" class="form-control"
+                                    [(ngModel)]="selectedProductId">
+                                    <option value="null">Selecione um produto</option>
+                                    <option value="{{product.id}}" *ngFor="let product of products">{{product.name + (product.multiple ? " - Múltiplo: " + product.multiple : "")}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="margin-top-30">
+                                <button type="button" (click)="addProduct()" class="btn btn-info btn-sm ">Adicionar</button>
+                            </div>
+                            
+                            <div class="ln_solid"></div>
+
+                            
+                            <table class="table table-bordered col-sm-8">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Nome</th>
+                                        <th>Valor unitário (R$)</th>
+                                        <th>Quantidade</th>
+                                        <th>Valor Total (R$)</th>
+                                        <th>Rentabilidade</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr [ngClass]="{'table-danger' : !saleItem.validSale}" *ngFor="let saleItem of saleItems; let i = index" >
+                                        <td>{{saleItem.productId}}</td>
+                                        <td>{{saleItem.productName}}</td>
+                                        <td>
+                                            <input type="text" class="form-control" [(ngModel)]="saleItem.sale_unit_price" name="sale-unit-price-{{i}}">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" [(ngModel)]="saleItem.amount" name="sale-item-amount-{{i}}">
+                                        </td>
+                                        <td>{{saleItem.totalPrice | number : '1.2-2'}}</td>
+                                        <td>{{saleItem.profitability}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <label for="" *ngIf="saleItems.length > 0">Total: R$ {{ totalValue | number : '1.2-2' }}</label>
+                        
+                    </div>
+                </div>
+
+                <div class="ln_solid">
+                </div>
+
+                <div class="clearfix">
+                    <div class="form-group">
+                        <button class="btn btn-success pull-right btn-sm">Salvar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
