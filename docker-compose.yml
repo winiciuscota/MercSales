@@ -4,18 +4,18 @@ services:
     build: ./frontend
     ports:
       - "4200:80"
-    networks:
-      - api_net
-    depends_on:
-      - webapi
+#     networks:
+#       - api_net
+#     depends_on:
+#       - webapi
 
-  webapi:
-    build: ./backend
-    command: python src/manage.py runserver 0.0.0.0:8002
-    ports:
-      - "8002:8002"
-    networks:
-      - api_net
+#   webapi:
+#     build: ./backend
+#     command: python src/manage.py runserver 0.0.0.0:8002
+#     ports:
+#       - "8002:8002"
+#     networks:
+#       - api_net
 
-networks: 
-  api_net:
+# networks: 
+#   api_net:

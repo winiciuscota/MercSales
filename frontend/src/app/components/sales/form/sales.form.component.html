@@ -1,7 +1,7 @@
 <div class="row">
     <div class="x_panel col-sm-12">
         <div class="form-horizontal">
-            <form #f="ngForm" (ngSubmit)="submit()" novalidate>
+            <form #f="ngForm" novalidate (ngSubmit)="submit()">
                 <div class="row">
 
                     <div class="col-sm-12">
@@ -9,7 +9,7 @@
                             <div class="form-group col-sm-2">
                                 <label for="" class="control-label">Cliente</label>
                                 <select name="client-id" id="client-id" class="form-control"
-                                    [(ngModel)]="item.clientId">
+                                    [(ngModel)]="sale.client_id">
                                     <option value="undefined">Selecione um cliente</option>
                                     <option value="{{client.id}}" *ngFor="let client of clients">{{client.name}}
                                     </option>
@@ -22,46 +22,60 @@
                                 <select name="product-id" id="product-id" class="form-control"
                                     [(ngModel)]="selectedProductId">
                                     <option value="null">Selecione um produto</option>
-                                    <option value="{{product.id}}" *ngFor="let product of products">{{product.name + (product.multiple ? " - Múltiplo: " + product.multiple : "")}}
+                                    <option value="{{product.id}}" *ngFor="let product of products">
+                                        {{product.name + (product.multiple ? " - Múltiplo: " + product.multiple : "")}}
                                     </option>
                                 </select>
                             </div>
                             <div class="margin-top-30">
-                                <button type="button" (click)="addProduct()" class="btn btn-info btn-sm ">Adicionar</button>
+                                <button type="button" (click)="addProduct()"
+                                    class="btn btn-info btn-sm">Adicionar</button>
                             </div>
-                            
+
                             <div class="ln_solid"></div>
 
-                            
-                            <table class="table table-bordered col-sm-8">
-                                <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Nome</th>
-                                        <th>Valor unitário (R$)</th>
-                                        <th>Quantidade</th>
-                                        <th>Valor Total (R$)</th>
-                                        <th>Rentabilidade</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr [ngClass]="{'table-danger' : !saleItem.validSale}" *ngFor="let saleItem of saleItems; let i = index" >
-                                        <td>{{saleItem.productId}}</td>
-                                        <td>{{saleItem.productName}}</td>
-                                        <td>
-                                            <input type="text" class="form-control" [(ngModel)]="saleItem.sale_unit_price" name="sale-unit-price-{{i}}">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" [(ngModel)]="saleItem.amount" name="sale-item-amount-{{i}}">
-                                        </td>
-                                        <td>{{saleItem.totalPrice | number : '1.2-2'}}</td>
-                                        <td>{{saleItem.profitability}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="col-sm-10">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Produto</th>
+                                            <th>Valor sugerido</th>
+                                            <th>Valor unitário (R$)</th>
+                                            <th>Quantidade</th>
+                                            <th>Múltiplo</th>
+                                            <th>Valor Total (R$)</th>
+                                            <th>Rentabilidade</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr [ngClass]="{'table-danger' : !saleItem.validSale}"
+                                            *ngFor="let saleItem of sale.items; let i = index">
+                                            <td>{{saleItem.productName}}</td>
+                                            <td>R$ {{saleItem.suggested_unit_price | number : '1.2-2'}}</td>
+                                            <td>
+                                                <input type="text" class="form-control"
+                                                    [(ngModel)]="saleItem.sale_unit_price" name="sale-unit-price-{{i}}">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" [(ngModel)]="saleItem.amount"
+                                                    name="sale-item-amount-{{i}}">
+                                            </td>
+                                            <td>{{saleItem.multiple}}</td>
+                                            <td>R$ {{saleItem.totalPrice | number : '1.2-2'}}</td>
+                                            <td>{{saleItem.profitability}}</td>
+                                            <td><button class="btn btn-sm btn-danger" (click)="removeItem(saleItem)">
+                                                    Remover
+                                                </button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
                         </div>
-                        <label for="" *ngIf="saleItems.length > 0">Total: R$ {{ totalValue | number : '1.2-2' }}</label>
-                        
+                        <label for="" *ngIf="sale.items.length > 0">Total: R$
+                            {{ totalValue | number : '1.2-2' }}</label>
+
                     </div>
                 </div>
 
@@ -69,9 +83,8 @@
                 </div>
 
                 <div class="clearfix">
-                    <div class="form-group">
-                        <button class="btn btn-success pull-right btn-sm">Salvar</button>
-                    </div>
+                    <button class="btn btn-info btn-sm pull-left" [routerLink]="['/sales']">Voltar</button>
+                    <button class="btn btn-success btn-sm pull-right" [disabled]="disabled">Salvar</button>
                 </div>
             </form>
         </div>

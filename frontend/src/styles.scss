@@ -3,3 +3,10 @@
 .margin-top-30 {
     margin-top: 30px;
 }
+
+@import '~ngx-toastr/toastr.css';
+
+// Workarounf for invisible toastr messages bug caused by conflict with bootstrap
+#toast-container > div {
+    opacity:1;
+}

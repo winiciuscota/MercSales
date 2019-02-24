@@ -18,21 +18,21 @@ export class BaseService<TModel> {
     return this.http.get<TModel[]>(this.endPoint);
   }
 
-  removeItem(itemId: TModel): Observable<TModel> {
-    return this.http.delete<TModel>(urljoin(this.endPoint, itemId));
+  removeItem(itemId: string | number) {
+    return this.http.delete<TModel>(urljoin(this.endPoint, itemId.toString(), '/'));
   }
 
   createItem(item: TModel): Observable<TModel> {
     return this.http.post<TModel>(this.endPoint, item);
   }
 
-  editItem(itemId: string, item: TModel): Observable<TModel> {
-    const url = urljoin(this.endPoint, itemId);
+  editItem(itemId: number | string, item: TModel): Observable<TModel> {
+    const url = urljoin(this.endPoint, itemId.toString(), '/');
     return this.http.put<TModel>(url, item);
   }
 
-  getItem(itemId: string): Observable<TModel> {
-    const url = urljoin(this.endPoint, itemId);
+  getItem(itemId: number | string): Observable<TModel> {
+    const url = urljoin(this.endPoint, itemId.toString());
     return this.http.get<TModel>(url);
   }
 }

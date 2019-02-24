@@ -11,6 +11,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { SalesListComponent } from './components/sales/list/sales.list.component';
 import { SalesFormComponent } from './components/sales/form/sales.form.component';
+import { SaleService } from './services/sale.service';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -20,6 +22,7 @@ import { SalesFormComponent } from './components/sales/form/sales.form.component
     SalesFormComponent
   ],
   imports: [
+    // RouterModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -27,7 +30,7 @@ import { SalesFormComponent } from './components/sales/form/sales.form.component
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
   ],
-  providers: [ClientService, ProductService],
+  providers: [ClientService, ProductService, SaleService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

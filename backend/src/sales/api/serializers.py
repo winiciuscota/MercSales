@@ -46,7 +46,7 @@ class SaleSerializer(serializers.ModelSerializer):
     items = SaleItemSerializer(many=True)
     client_id = serializers.PrimaryKeyRelatedField(
         source='client', queryset=Client.objects.all(), )
-    client = ClientSerializer()
+    client = ClientSerializer(read_only=True)
     total_value = serializers.SerializerMethodField()
 
     class Meta:

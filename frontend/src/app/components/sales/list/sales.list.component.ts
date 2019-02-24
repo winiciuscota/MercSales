@@ -1,42 +1,29 @@
 import { Component } from '@angular/core';
-import { ClientService } from 'src/app/services/client.service';
-import { ProductService } from 'src/app/services/product.service';
-import { Product } from 'src/app/models/product.model';
-import { Client } from 'src/app/models/client.model';
+import { SaleService } from 'src/app/services/sale.service';
+import { Sale } from 'src/app/models/sale.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'sales-list',
     template: `
-        <h2>Client list</h2>
-        button
-        <table class="table">
+        <h2>Vendas</h2>
+        <button class="btn btn-sm btn-success" [routerLink]="['create']">Criar</button>
+        <table class="table table-bordered">
             <thead>
                 <tr>
+                    <th>Id</th>
+                    <th>Cliente</th>
+                    <th>Valor Total</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let client of clients"> 
-                    <td>{{client.id}}</td>
-                    <td>{{client.name}}</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h2>Products list</h2>
-        button
-        <table class="table">
-            <thead>
-                <tr>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let product of products"> 
-                    <td>{{product.id}}</td>
-                    <td>{{product.name}}</td>
-                    <td>{{product.unit_price}}</td>
-                    <td>{{product.multiple}}</td>
+                <tr *ngFor="let sale of sales"> 
+                    <td>{{sale.id}}</td>
+                    <td>{{sale.client.name}}</td>
+                    <td>R$ {{sale.total_value | number : '1.2-2'}}</td>
+                    <td><button class="btn btn-sm btn-info" [routerLink]="['edit', sale.id]">Editar</button></td>
+                    <td><button class="btn btn-sm btn-danger" (click)="removeSale(sale.id)">Remover</button></td>
                 </tr>
             </tbody>
         </table>
@@ -44,15 +31,18 @@ import { Client } from 'src/app/models/client.model';
 })
 export class SalesListComponent {
 
-    products: Product[];
-    clients: Client[];
+    sales: Sale[];
 
-    constructor(private productService: ProductService, private clientService: ClientService) {
+    constructor(private saleService: SaleService, private toastrService: ToastrService) {
 
     }
 
     ngOnInit() {
-        this.productService.getItems().subscribe(res => this.products = res);
-        this.clientService.getItems().subscribe(res => this.clients = res);
+        this.saleService.getItems().subscribe(res => this.sales = res);
+    }
+
+    removeSale(saleId: number) {
+        this.saleService.removeItem(saleId).subscribe(res =>
+            this.toastrService.success("Venda " + res.id + "removida com sucesso!"));
     }
 }
