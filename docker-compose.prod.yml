@@ -1,7 +1,7 @@
 version: "3.6"
 services:
   nginx:
-    build: ./nginx
+    image: winiciuscota/mercsales-nginx
     restart: always
     ports:
       - "80:80"
@@ -12,7 +12,7 @@ services:
       - webapi
 
   webapp:
-    build: ./frontend
+    image: winiciuscota/mercsales-app
     restart: always
     networks:
       - api_net
@@ -20,7 +20,7 @@ services:
       - webapi
 
   webapi:
-    build: ./backend
+    image: winiciuscota/mercsales-api
     command: python src/manage.py runserver 0.0.0.0:8000
     restart: always
     networks:

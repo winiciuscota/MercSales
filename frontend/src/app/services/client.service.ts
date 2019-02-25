@@ -12,7 +12,7 @@ export class ClientService extends BaseService<Client> {
     endPoint: string;
 
     constructor(protected http: HttpClient) {
-        super(http, "clients");
+        super(http, "/api/clients/");
     }
 
 
